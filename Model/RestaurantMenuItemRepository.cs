@@ -36,12 +36,27 @@ namespace RestaurantMenuApi.Model
         {
             return _restaurantMenuDbContext.RestaurantMenuItems.FirstOrDefault(r => r.RestaurantMenuItemId == restaurantMenuItemId);
         }
-        public bool UpdateRestaurantMenuItemById(int RestaurantMenuItemId, RestaurantMenuItem newRestauranMenuItem)
+        public bool UpdateRestaurantMenuItemById(int RestaurantMenuItemId, RestaurantMenuItem newRestaurantMenuItem)
         {
             RestaurantMenuItem? restaurantMenuItemToUpdate = _restaurantMenuDbContext.RestaurantMenuItems.FirstOrDefault(r => r.RestaurantMenuItemId == RestaurantMenuItemId);
             if (restaurantMenuItemToUpdate != null)
             {
-                restaurantMenuItemToUpdate = newRestauranMenuItem;
+                restaurantMenuItemToUpdate.RestaurantMenuItemName = newRestaurantMenuItem.RestaurantMenuItemName;
+                restaurantMenuItemToUpdate.RestaurantMenuItemDescription = newRestaurantMenuItem.RestaurantMenuItemDescription;
+                restaurantMenuItemToUpdate.Price = newRestaurantMenuItem.Price;
+                restaurantMenuItemToUpdate.Ingredients = newRestaurantMenuItem.Ingredients;
+                restaurantMenuItemToUpdate.CategoryId = newRestaurantMenuItem.CategoryId;
+                _restaurantMenuDbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        public bool UpdateRestaurantMenuItemNameById(int RestaurantMenuItemId, string newName)
+        {
+            RestaurantMenuItem? restaurantMenuItemToUpdate = _restaurantMenuDbContext.RestaurantMenuItems.FirstOrDefault(r => r.RestaurantMenuItemId == RestaurantMenuItemId);
+            if (restaurantMenuItemToUpdate != null)
+            {
+                restaurantMenuItemToUpdate.RestaurantMenuItemName = newName;
                 _restaurantMenuDbContext.SaveChanges();
                 return true;
             }

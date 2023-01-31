@@ -36,7 +36,7 @@ namespace RestaurantMenuApi.Controllers.Api
             }
             return NotFound();
         }
-        [HttpGet("getall")]
+        [HttpGet("restaurantmenuitems")]
         public IActionResult GetRestaurantMenuItems()
         {
             return Ok(_restaurantMenuItemRepository.GetAllRestaurantMenuItem());
@@ -72,5 +72,27 @@ namespace RestaurantMenuApi.Controllers.Api
             }
             return NotFound();
         }
+        [HttpPut("update/{id}")]
+        public IActionResult UpdateRestaurantMenuItemById(int id, [FromBody] RestaurantMenuItem restaurantMenuItem)
+        {
+            restaurantMenuItem.RestaurantMenuItemId = id;
+            if (_restaurantMenuItemRepository.UpdateRestaurantMenuItemById(id, restaurantMenuItem))
+            {
+                return Ok($"Item with id = {id} updated.");
+            }
+            return BadRequest($"Item with id = {id} does not exist.");
+        }
+        [HttpPatch("update-name/{id}")]
+        public IActionResult UpdateRestaurantItemCategoryById(int id, string name)
+        {
+            if (_restaurantMenuItemRepository.UpdateRestaurantMenuItemNameById(id, name))
+            {
+                return Ok($"Item with id = {id} name is changed");
+            }
+            return BadRequest($"Item with id = {id} does not exist.");
+        }
     }
 }
+/*
+ -Route isimlerini yeniden gözden geçir! 
+ */
