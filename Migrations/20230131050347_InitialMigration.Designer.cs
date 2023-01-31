@@ -11,7 +11,7 @@ using RestaurantMenuApi.Model;
 namespace RestaurantMenuApi.Migrations
 {
     [DbContext(typeof(RestaurantMenuDbContext))]
-    [Migration("20230130212748_InitialMigration")]
+    [Migration("20230131050347_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -55,8 +55,8 @@ namespace RestaurantMenuApi.Migrations
                     b.Property<string>("Ingredients")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("RestaurantMenuItemDescription")
                         .HasColumnType("nvarchar(max)");
@@ -67,20 +67,7 @@ namespace RestaurantMenuApi.Migrations
 
                     b.HasKey("RestaurantMenuItemId");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("RestaurantMenuItems");
-                });
-
-            modelBuilder.Entity("RestaurantMenuApi.Model.RestaurantMenuItem", b =>
-                {
-                    b.HasOne("RestaurantMenuApi.Model.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

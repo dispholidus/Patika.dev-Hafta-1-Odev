@@ -16,7 +16,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
     c.IgnoreObsoleteActions();
     c.IgnoreObsoleteProperties();
@@ -45,5 +46,15 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapDefaultControllerRoute();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
 
+    var context = services.GetRequiredService<RestaurantMenuDbContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
+DbInitializer.Seed(app);
 app.Run();
