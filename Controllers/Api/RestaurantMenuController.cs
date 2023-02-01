@@ -42,7 +42,7 @@ namespace RestaurantMenuApi.Controllers.Api
             return Ok(_restaurantMenuItemRepository.GetAllRestaurantMenuItem());
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddRestaurantMenuItem(string name, decimal price, string? restaurantMenuItemDescription, string? ingredients, int categoryId)
         {
             var newRestaurantMenuItem = new RestaurantMenuItem
@@ -63,7 +63,7 @@ namespace RestaurantMenuApi.Controllers.Api
             return Ok(newRestaurantMenuItem);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete]
         public IActionResult DeleteRestaurantMenuItemById(int id)
         {
             if (_restaurantMenuItemRepository.DeleteRestaurantMenuItemById(id))
@@ -72,7 +72,7 @@ namespace RestaurantMenuApi.Controllers.Api
             }
             return NotFound();
         }
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateRestaurantMenuItemById(int id, [FromBody] RestaurantMenuItem restaurantMenuItem)
         {
             restaurantMenuItem.RestaurantMenuItemId = id;
@@ -82,7 +82,7 @@ namespace RestaurantMenuApi.Controllers.Api
             }
             return BadRequest($"Item with id = {id} does not exist.");
         }
-        [HttpPatch("update-name/{id}")]
+        [HttpPatch("{id}")]
         public IActionResult UpdateRestaurantItemCategoryById(int id, string name)
         {
             if (_restaurantMenuItemRepository.UpdateRestaurantMenuItemNameById(id, name))
@@ -93,6 +93,3 @@ namespace RestaurantMenuApi.Controllers.Api
         }
     }
 }
-/*
- -Route isimlerini yeniden gözden geçir! 
- */

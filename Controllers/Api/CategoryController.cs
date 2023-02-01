@@ -43,7 +43,7 @@ namespace RestaurantMenuApi.Controllers.Api
             return NotFound();
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult AddCategory(string categoryName)
         {
             var category = new Category { CategoryName = categoryName };
@@ -55,7 +55,7 @@ namespace RestaurantMenuApi.Controllers.Api
             return Ok(category);
         }
 
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult DeleteCategoryById(int id)
         {
             if (_categoryRepository.DeleteCategoryById(id))
@@ -65,7 +65,7 @@ namespace RestaurantMenuApi.Controllers.Api
             return NotFound();
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("{id}")]
         public IActionResult UpdateCategoryById(int id, string categoryName)
         {
             Category category = new Category { CategoryId = id, CategoryName = categoryName };
